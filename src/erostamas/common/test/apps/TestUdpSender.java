@@ -1,6 +1,10 @@
 package erostamas.common.test.apps;
 
+import java.net.InetAddress;
+
 import erostamas.common.udp_messenger.UdpSender;
+import erostamas.common.Message;
+
 import java.lang.Thread;
 
 public class TestUdpSender {
@@ -12,19 +16,20 @@ public class TestUdpSender {
 
         int port = 0;
         try {
+            InetAddress address = InetAddress.getByName(args[0]);
             port = Integer.parseInt(args[1]);
-        } catch (Exception e) {
-            System.err.println("Cannot convert port to integer: " + args[1]);
-            System.exit(1);
-        }
-        UdpSender udpSender = new UdpSender(args[0], port);
-        while(true) {
-            udpSender.sendMessage(Long.toString(System.currentTimeMillis()/1000));
-            try {
-                Thread.sleep(1000);
-            } catch (Exception e) {
+            UdpSender udpSender = new UdpSender();
+            while(true) {
+                udpSender.sendMessage(new Message(Long.toString(System.currentTimeMillis()/1000), address, port));
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
 
+                }
             }
+        } catch (Exception e) {
+            System.err.println("Cannot parse address: " + args[0] + " or convert port to integer: " + args[1]);
+            System.exit(1);
         }
     }
 };

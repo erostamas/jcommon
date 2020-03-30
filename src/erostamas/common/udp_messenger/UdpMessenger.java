@@ -1,20 +1,25 @@
 package erostamas.common.udp_messenger;
 
-import erostamas.common.interfaces.IMessenger;
+import erostamas.common.IMessenger;
+import erostamas.common.Message;
+
+import java.util.ArrayList;
 
 public class UdpMessenger implements IMessenger{
 
-    UdpMessenger(String IpAddress, int port) {
-
+    public UdpMessenger(int listenPort) {
+        _sender = new UdpSender();
+        _receiver = new UdpReceiver(listenPort);
+        _receiver.start();
     }
 
     @Override
-    public String[] getIncomingMessages() {
+    public ArrayList<Message> getIncomingMessages() {
         return _receiver.getIncomingMessages();
     }
 
     @Override
-	public boolean sendMessage(String message) {
+	public boolean sendMessage(Message message) {
         return _sender.sendMessage(message);
     }
 
