@@ -8,7 +8,7 @@ public class Message {
     private int _port;
 
     public Message(String messageContent, InetAddress endpoint, int port) {
-        _messageContent = messageContent;
+        _messageContent = messageContent.trim();
         _endpoint = endpoint;
         _port = port;
     }

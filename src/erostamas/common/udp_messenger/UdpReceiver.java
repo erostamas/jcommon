@@ -37,7 +37,6 @@ public class UdpReceiver extends Thread implements IMessageReceiver {
              
             InetAddress address = packet.getAddress();
             int port = packet.getPort();
-            packet = new DatagramPacket(_buf, _buf.length, address, port);
             Message received = new Message(new String(packet.getData(), 0, packet.getLength()), address, port);
             try {
                 _incomingMessagesMutex.acquire();

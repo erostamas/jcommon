@@ -6,17 +6,19 @@ import erostamas.common.ICommand;
 import java.util.ArrayList;
 
 public class CommandProcessor {
-    private ArrayList<ICommandAdapter> _commandAdapters;
+    private ArrayList<ICommandAdapter> _commandAdapters = new ArrayList<ICommandAdapter>();
 
-    void processCommands() {
+    public void processCommands() {
         for (ICommandAdapter commandAdapter : _commandAdapters) {
             for (ICommand command : commandAdapter.getCommands()) {
-                command.execute();
+                if (command != null) {
+                    command.execute();
+                }
             }
         }
     }
 
-    void registerCommandAdapter(ICommandAdapter commandAdapter) {
+    public void registerCommandAdapter(ICommandAdapter commandAdapter) {
         _commandAdapters.add(commandAdapter);
     }
 

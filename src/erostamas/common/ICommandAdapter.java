@@ -3,13 +3,13 @@ package erostamas.common;
 import java.util.ArrayList;
 
 public abstract class ICommandAdapter {
-    private ArrayList<IMessageReceiver> _messageReceivers;
+    private ArrayList<IMessageReceiver> _messageReceivers = new ArrayList<IMessageReceiver>();
 
     public ArrayList<ICommand> getCommands() {
         ArrayList<ICommand> ret = new ArrayList<ICommand>();
         for (IMessageReceiver receiver : _messageReceivers) {
             for (Message message : receiver.getIncomingMessages()) {
-                ret.add(convertMessage(message.getMessageContent()));
+                ret.add(convertMessage(message));
             }
         }
         return ret;
@@ -19,5 +19,5 @@ public abstract class ICommandAdapter {
         _messageReceivers.add(messageReceiver);
     }
 
-    abstract ICommand convertMessage(String message);
+    public abstract ICommand convertMessage(Message message);
 };
